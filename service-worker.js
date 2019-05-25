@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/cnb-generate-damn-xsd/precache-manifest.73605c06606ad5b590bc1ce844382e6c.js"
+  "/cnb-generate-damn-xsd/precache-manifest.bd3b1438e840cb4d897039cc946ca927.js"
 );
 
 self.addEventListener('message', (event) => {
