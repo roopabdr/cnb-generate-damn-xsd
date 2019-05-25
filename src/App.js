@@ -4,20 +4,51 @@ import './App.css';
 class App extends Component {
 
   state = {
-    element_field: [],
-    length_field: [],
+    element_field: [],    
     element_texarea: '',
-    length_textarea: ''
-  }
+    length_field: [],
+    length_textarea: '',
+    object_name: ''
+  }  
   
   generateXSD = () => {
-    console.log(this.state.element_field);
-    this.downloadTxtFile();
+    console.log(this.state.element_field, this.state.length_field);
+    
+    let xsd_begin_wrapper = '';
+    let xsd_end_wrapper = '';
+    xsd_begin_wrapper = `<?xml version="1.0" encoding="UTF-8" ?>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            xmlns:tns="http://www.oracle.com/FTPAdapter"
+            targetNamespace="http://www.oracle.com/FTPAdapter"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            nxsd:version="NXSD"
+            nxsd:stream="chars"
+            nxsd:encoding="US-ASCII">
+        
+    <xsd:element name="${this.state.object_name}">
+    <xsd:complexType>
+			<xsd:choice minOccurs="0" maxOccurs="unbounded" nxsd:choiceCondition="fixedLength" nxsd:length="0">
+				<xsd:element name="${this.state.object_name}_RECORD" nxsd:style="array" nxsd:cellSeparatedBy="\${eol}" nxsd:conditionValue="">
+					<xsd:complexType>
+            <xsd:sequence>`;
+    
+    xsd_end_wrapper = `</xsd:sequence>
+    </xsd:complexType>
+    </xsd:element>
+    </xsd:choice>
+    </xsd:complexType>
+    </xsd:element>
+    </xsd:schema>`;
+    
+    // console.log(xsd_begin_wrapper+xsd_end_wrapper);
+    // this.downloadTxtFile(xsd_begin_wrapper+xsd_end_wrapper);
   }
 
-  downloadTxtFile = () => {
+  downloadTxtFile = (content) => {
     const element = document.createElement("a");
-    const file = new Blob([this.state.element_field], {type: 'text/xml'});
+    const file = new Blob([content], {type: 'text/xml'});
     element.href = URL.createObjectURL(file);
     element.download = "myFile.xsd";
     document.body.appendChild(element); // Required for this to work in FireFox
@@ -28,10 +59,22 @@ class App extends Component {
     this.setState({element_texarea: event.target.value});
   }
 
+  onLengthInputChange = (event) => {
+    this.setState({length_textarea: event.target.value});
+  }
+
+  onObjectInputChange = (event) => {
+    this.setState({object_name: event.target.value});
+  }
+
   onGenerateClick = () => {
     let elem_value = this.state.element_texarea.replace(/^\s*$(?:\r\n?|\n)/gm,'').trim().split('\n');
     elem_value = elem_value.map((item, index) => 'f' + (index + 1).toString().concat('_',item.replace(/ /g,'_')));
-    this.setState({element_field: elem_value}, function() {
+
+    let length_value = this.state.length_textarea.replace(/^\s*$(?:\r\n?|\n)/gm,'').trim().split('\n');
+    length_value = length_value.map((item, index) => 'f' + (index + 1).toString().concat('_',item.replace(/ /g,'_')));
+
+    this.setState({element_field: elem_value, length_field: length_value}, function() {
       this.generateXSD();
     });    
   }
@@ -40,17 +83,18 @@ class App extends Component {
     return (
       <div className="App">
         <header>
-          <h1>Generate Damn XSD for CNB</h1>
+          <h1>Generate Damn XSD for CNB</h1>          
+          <input type="text" placeholder='Enter Object RICE ID' className='input_text' onChange={this.onObjectInputChange}/>
           <button className="success" onClick={this.onGenerateClick}>Generate</button>
         </header>
         <div className='fields'>
           <div className='fields_area'>
             <h2>Copy/Paste field names here:</h2>
-            <textarea name="fields" id="fields_id" cols="40" rows="30" onChange={this.onDataInputChange}></textarea>
+            <textarea name="fields" id="fields_id" cols="40" rows="25" onChange={this.onDataInputChange}></textarea>
           </div>
           <div className='length_area'>
             <h2>Copy/Paste field lenghts here: </h2>
-            <textarea name="fields" id="fields_id" cols="20" rows="30"></textarea>
+            <textarea name="fields" id="fields_id" cols="20" rows="25" onChange={this.onLengthInputChange}></textarea>
           </div>
         </div>      
       </div>
