@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/cnb-generate-damn-xsd/static/css/main.b96c2bf5.chunk.css",
+    "main.js": "/cnb-generate-damn-xsd/static/js/main.5e7fd104.chunk.js",
+    "main.js.map": "/cnb-generate-damn-xsd/static/js/main.5e7fd104.chunk.js.map",
+    "runtime~main.js": "/cnb-generate-damn-xsd/static/js/runtime~main.223bb43f.js",
+    "runtime~main.js.map": "/cnb-generate-damn-xsd/static/js/runtime~main.223bb43f.js.map",
+    "static/js/2.65aa1cca.chunk.js": "/cnb-generate-damn-xsd/static/js/2.65aa1cca.chunk.js",
+    "static/js/2.65aa1cca.chunk.js.map": "/cnb-generate-damn-xsd/static/js/2.65aa1cca.chunk.js.map",
+    "index.html": "/cnb-generate-damn-xsd/index.html",
+    "precache-manifest.73605c06606ad5b590bc1ce844382e6c.js": "/cnb-generate-damn-xsd/precache-manifest.73605c06606ad5b590bc1ce844382e6c.js",
+    "service-worker.js": "/cnb-generate-damn-xsd/service-worker.js",
+    "static/css/main.b96c2bf5.chunk.css.map": "/cnb-generate-damn-xsd/static/css/main.b96c2bf5.chunk.css.map"
+  }
+}
