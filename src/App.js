@@ -8,7 +8,8 @@ class App extends Component {
     element_texarea: '',
     length_field: [],
     length_textarea: '',
-    object_name: ''
+    object_name: '',
+    click: false
   }  
   
   generateXSD = () => {
@@ -41,30 +42,45 @@ class App extends Component {
     </xsd:complexType>
     </xsd:element>
     </xsd:schema>`;
-    
     // console.log(xsd_begin_wrapper+xsd_end_wrapper);
-    // this.downloadTxtFile(xsd_begin_wrapper+xsd_end_wrapper);
+
+    let element_field = [...this.state.element_field];
+    let length_field = [...this.state.length_field];
+    let elements = '';
+
+    if (element_field.length === length_field.length) {
+
+      element_field.map((item, index) => {
+        item.split("_")[1] === 'Blank' || item.split("_")[1] === 'Default'
+        ? elements += `<xsd:element name="${item}" type="xsd:string" nxsd:style="fixedLength" nxsd:length="${length_field[index].split("_")[1]}" nxsd:padStyle="tail" />\n`
+        : elements += `<xsd:element name="${item}" type="xsd:string" nxsd:style="fixedLength" nxsd:length="${length_field[index].split("_")[1]}" />\n`;
+        return null;
+      })
+    }
+    // console.log(elements);
+    this.downloadXSDFile(this.state.object_name, xsd_begin_wrapper+elements+xsd_end_wrapper);    
+    // return <div><h1>12345456</h1></div>;
   }
 
-  downloadTxtFile = (content) => {
+  downloadXSDFile = (filename, content) => {
     const element = document.createElement("a");
     const file = new Blob([content], {type: 'text/xml'});
     element.href = URL.createObjectURL(file);
-    element.download = "myFile.xsd";
+    element.download = `${filename}.xsd`;
     document.body.appendChild(element); // Required for this to work in FireFox
     element.click();
   }
 
   onDataInputChange = (event) => {
-    this.setState({element_texarea: event.target.value});
+    this.setState({element_texarea: event.target.value, click: false});
   }
 
   onLengthInputChange = (event) => {
-    this.setState({length_textarea: event.target.value});
+    this.setState({length_textarea: event.target.value, click: false});
   }
 
   onObjectInputChange = (event) => {
-    this.setState({object_name: event.target.value});
+    this.setState({object_name: event.target.value, click: false});
   }
 
   onGenerateClick = () => {
@@ -74,9 +90,10 @@ class App extends Component {
     let length_value = this.state.length_textarea.replace(/^\s*$(?:\r\n?|\n)/gm,'').trim().split('\n');
     length_value = length_value.map((item, index) => 'f' + (index + 1).toString().concat('_',item.replace(/ /g,'_')));
 
+    // this.setState({element_field: elem_value, length_field: length_value, click: true});
     this.setState({element_field: elem_value, length_field: length_value}, function() {
       this.generateXSD();
-    });    
+    });
   }
 
   render() {
@@ -96,7 +113,7 @@ class App extends Component {
             <h2>Copy/Paste field lenghts here: </h2>
             <textarea name="fields" id="fields_id" cols="20" rows="25" onChange={this.onLengthInputChange}></textarea>
           </div>
-        </div>      
+        </div>
       </div>
     )
   }
