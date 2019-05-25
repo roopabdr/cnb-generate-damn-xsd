@@ -1,33 +1,69 @@
+body {
+  background: 
+  linear-gradient(135deg, black 25%, transparent 25%) -50px 0,
+  linear-gradient(225deg, black 25%, transparent 25%) -50px 0,
+  linear-gradient(315deg, black 25%, transparent 25%),
+  linear-gradient(45deg, black 25%, transparent 25%);	
+  background-size: 2em 2em;
+  background-color: #232323;  
+  /* display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  grid-gap: 10px; */
+}
+
 .App {
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+.fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  width: 100%;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+header{
+  width: 100%;
+  text-align: center;
+}
+
+header button {
+  border: 2px solid black;
+  background-color: white;
+  color: black;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+header .success {
+  border-color: #4CAF50;
+  color: green;
+}
+
+header .success:hover {
+  background-color: #4CAF50;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.fields_area {
+  display: flex;
+  font-weight: bold;
+  padding: 20px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+textarea{
+  font-size: 20px;
+}
+
+.length_area {
+  display: flex;
+  font-weight: bold;
+  padding: 20px;  
+}
+
+h1, h2 {  
+  color: #ffffff;
+  margin: 20px;
 }
