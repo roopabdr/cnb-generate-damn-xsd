@@ -8,7 +8,9 @@ class App extends Component {
     element_texarea: '',
     length_field: [],
     length_textarea: '',
-    object_name: '',
+    data_field: [],
+    data_textarea: '',
+    object_name: '',    
     click: false
   }  
   
@@ -58,25 +60,50 @@ class App extends Component {
       })
     }
     // console.log(elements);
-    this.downloadXSDFile(this.state.object_name, xsd_begin_wrapper+elements+xsd_end_wrapper);    
+    this.downloadFile(this.state.object_name, xsd_begin_wrapper+elements+xsd_end_wrapper, 'text/xml', 'xsd');
     // return <div><h1>12345456</h1></div>;
   }
 
-  downloadXSDFile = (filename, content) => {
+  generateSampleFile(){
+    let data  = '';
+    let data_field = [...this.state.data_field];
+    let length_field = [...this.state.length_field];
+
+    data_field.map((item, index) => {
+      // console.log('length_field[index]', length_field[index]);
+      // console.log(item.padStart(length_field[index], ' '));
+      item.split("_")[1] === 'Amt'
+      ? data += item.split("_")[0].toString().padStart(length_field[index].split("_")[1], '0')
+      : (
+        item === 'Blank'
+        ? data += ''.padEnd(length_field[index], " ")
+        : data += item.toString().padEnd(length_field[index].split("_")[1], " ")
+        );
+      return null;
+    });
+
+    this.downloadFile(this.state.object_name+' Data', data, 'text/plain', 'txt');
+  }
+
+  downloadFile = (filename, content, content_type, file_extension) => {
     const element = document.createElement("a");
-    const file = new Blob([content], {type: 'text/xml'});
+    const file = new Blob([content], {type: content_type});
     element.href = URL.createObjectURL(file);
-    element.download = `${filename}.xsd`;
+    element.download = `${filename}.${file_extension}`;
     document.body.appendChild(element); // Required for this to work in FireFox
     element.click();
   }
 
-  onDataInputChange = (event) => {
+  onFieldInputChange = (event) => {
     this.setState({element_texarea: event.target.value, click: false});
   }
 
   onLengthInputChange = (event) => {
     this.setState({length_textarea: event.target.value, click: false});
+  }
+
+  onDataInputChange = (event) => {
+    this.setState({data_textarea: event.target.value, click: false});
   }
 
   onObjectInputChange = (event) => {
@@ -96,6 +123,15 @@ class App extends Component {
     });
   }
 
+  onGenerateDataClick = () => {
+    // console.log(this.state.data_textarea);
+    let data_value = this.state.data_textarea.replace(/^\s*$(?:\r\n?|\n)/gm,'').trim().split('\n');
+
+    this.setState({data_field: data_value}, function(){
+      this.generateSampleFile();
+    });
+  }
+
   render() {
     return (
       <div className="App">
@@ -103,15 +139,20 @@ class App extends Component {
           <h1>Generate Damn XSD for CNB</h1>          
           <input type="text" placeholder='Enter Object RICE ID' className='input_text' onChange={this.onObjectInputChange}/>
           <button className="success" onClick={this.onGenerateClick}>Generate</button>
+          <button className="success" onClick={this.onGenerateDataClick}>Generate Sample Data</button>
         </header>
         <div className='fields'>
           <div className='fields_area'>
             <h2>Copy/Paste field names here:</h2>
-            <textarea name="fields" id="fields_id" cols="40" rows="25" onChange={this.onDataInputChange}></textarea>
+            <textarea name="fields" id="fields_id" cols="40" rows="25" onChange={this.onFieldInputChange}></textarea>
           </div>
           <div className='length_area'>
             <h2>Copy/Paste field lenghts here: </h2>
-            <textarea name="fields" id="fields_id" cols="20" rows="25" onChange={this.onLengthInputChange}></textarea>
+            <textarea name="length" id="length_id" cols="20" rows="25" onChange={this.onLengthInputChange}></textarea>
+          </div>
+          <div className='data_area'>
+            <h2>Copy/Paste field data here: </h2>
+            <textarea name="data" id="data_id" cols="20" rows="25" onChange={this.onDataInputChange}></textarea>            
           </div>
         </div>
       </div>

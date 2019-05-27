@@ -20,7 +20,7 @@ body {
 .fields {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr;
+  grid-template-rows: 1fr 1fr;
   width: 100%;
 }
 
@@ -41,6 +41,7 @@ header button {
 header .success {
   border-color: #4CAF50;
   color: green;
+  margin: 20px;
 }
 
 header .success:hover {
@@ -65,6 +66,12 @@ textarea{
 }
 
 .length_area {
+  display: flex;
+  font-weight: bold;
+  padding: 20px;  
+}
+
+.data_area {
   display: flex;
   font-weight: bold;
   padding: 20px;  
