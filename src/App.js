@@ -55,7 +55,7 @@ class App extends Component {
       element_field.map((item, index) => {
         item.split("_")[1] === 'Blank' || item.split("_")[1] === 'Default'
         ? elements += `<xsd:element name="${item}" type="xsd:string" nxsd:style="fixedLength" nxsd:length="${length_field[index].split("_")[1]}" nxsd:padStyle="tail" />\n`
-        : elements += `<xsd:element name="${item}" type="xsd:string" nxsd:style="fixedLength" nxsd:length="${length_field[index].split("_")[1]}" />\n`;
+        : elements += `<xsd:element name="${item}" type="xsd:string" minOccurs="0" nxsd:style="fixedLength" nxsd:length="${length_field[index].split("_")[1]}" />\n`;
         return null;
       })
     }
