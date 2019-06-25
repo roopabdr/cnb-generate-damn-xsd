@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "1ebf6f24150749253351b8ba1f8eccd8",
+    "revision": "5db89a0760be0cc64c4821444ad3dcbf",
     "url": "/cnb-generate-damn-xsd/index.html"
   },
   {
-    "revision": "98e7ec815712973f9c3e",
+    "revision": "80661a9f15dc71a7db13",
     "url": "/cnb-generate-damn-xsd/static/css/main.a0bd3ebf.chunk.css"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/cnb-generate-damn-xsd/static/js/2.164617b5.chunk.js"
   },
   {
-    "revision": "98e7ec815712973f9c3e",
-    "url": "/cnb-generate-damn-xsd/static/js/main.32f02e79.chunk.js"
+    "revision": "80661a9f15dc71a7db13",
+    "url": "/cnb-generate-damn-xsd/static/js/main.2e372913.chunk.js"
   },
   {
     "revision": "2b6d61bbf61cc3b6242d",
